@@ -1,0 +1,102 @@
+<ng-template #content let-c="close" let-d="dismiss" xmlns="">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="companyName" [(ngModel)]="companyName"/>
+      </div>
+
+      <div class="form-group">
+        <label for="estimatedAnnualEarnings">Estimated annual earnings:</label>
+        <input type="number" class="form-control" id="estimatedAnnualEarnings" name="estimatedAnnualEarnings"
+               [(ngModel)]="estimatedAnnualEarnings"/>
+      </div>
+
+      <label for="parentCompany">Select parent company</label>
+      <div class="form-group" id='parentCompany'>
+        <select [(ngModel)]="ownerId" name="ownerId" class="form-control" >
+          <option value="0" >select a company</option>
+            <option *ngFor="let item of companiesForSelect" value="{{item.id}}" >{{item.companyName}} </option>
+        </select>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="save()">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #edit let-c="close" let-d="dismiss" xmlns="">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form>
+
+
+      <label>Select company for editing</label>
+      <div class="form-group">
+        <select [(ngModel)]="ownerId" name="ownerId" class="form-control" (click)="setForEdit()">
+          <option value="0" >select a company</option>
+          <option *ngFor="let item of companiesForSelect" value="{{item.id}}" >{{item.companyName}} </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="companyNameForEdit">Name:</label>
+        <input type="text" class="form-control" id="companyNameForEdit" name="companyNameForEdit" [(ngModel)]="companyNameForEdit" required="required"/>
+      </div>
+
+      <div class="form-group">
+        <label for="estimatedAnnualEarningsForEdit">Estimated annual earnings:</label>
+        <input type="number" class="form-control" id="estimatedAnnualEarningsForEdit" name="estimatedAnnualEarningsForEdit"
+               [(ngModel)]="estimatedAnnualEarningsForEdit" />
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="edidCompany()">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #delete let-c="close" let-d="dismiss" xmlns="">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <label>Select company for deleting</label>
+  <div class="form-group">
+    <select [(ngModel)]="idForDelete" name="ownerId" class="form-control">
+      <option value="0" >select a company</option>
+      <option *ngFor="let item of companiesForSelect" value="{{item.id}}" >{{item.companyName}} </option>
+    </select>
+    <button type="button" class="btn btn-outline-dark" (click)="deleteCompany()">Delete</button>
+  </div>
+</ng-template>
+<div class="container">
+  <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Add Company</button>
+  <button class="btn btn-lg btn-outline-primary" (click)="open(edit)">Edit Company</button>
+  <button class="btn btn-lg btn-outline-primary" (click)="open(delete)">Delete Company</button>
+
+
+  <hr>
+
+  <nodes [nodes]="nodes" (add)="open(content)"></nodes>
+
+</div>
+
